@@ -41,6 +41,14 @@ class LdapFilterParser(private val input: String) {
 
     fun validate(): LdapFilter {
         try {
+            if (input.isBlank()) {
+                badCharacters.add(BadCharacters("Filter cannot be empty", 0..<input.length))
+                return LdapFilter(
+                    searchElements = emptyList(),
+                    badCharacters = badCharacters,
+                )
+            }
+
             parseFilter()
             skipWhitespace()
             if (pos < input.length) {
@@ -98,7 +106,6 @@ class LdapFilterParser(private val input: String) {
 
     private fun parseNot() {
         pos++ // consume !
-        skipWhitespace()
         parseFilter()
     }
 
@@ -186,6 +193,10 @@ class LdapFilterParser(private val input: String) {
         if (pos < input.length) input[pos] else null
 
     private fun expect(c: Char) {
+        if (pos >= input.length) {
+            badCharacters.add(BadCharacters("Expected '$c'", input.length..input.length))
+            return
+        }
         val range = skip { c != it }
         pos++
         if (range.length > 0) {
