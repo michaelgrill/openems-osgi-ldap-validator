@@ -62,4 +62,12 @@ class LdapFilterTest {
         assertEquals(16..<19, filter.badCharacters.first().range)
     }
 
+    @Test
+    fun validateLastBracket() {
+        val filter = validateLdapFilter("(&(id=component0)(enabled=true)")
+
+        assertEquals(1, filter.badCharacters.size, "Unexpected bad characters at ${filter.badCharacters}")
+        assertEquals(31..31, filter.badCharacters.first().range)
+    }
+
 }
