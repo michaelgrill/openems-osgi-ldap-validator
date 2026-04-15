@@ -16,6 +16,13 @@ class LdapFilterTest {
     }
 
     @Test
+    fun validateValidFilterDefaultIdWithEnabled() {
+        val filter = validateLdapFilter("(&(id=\${config.modbus_id})(enabled=true))")
+
+        assertEquals(0, filter.badCharacters.size, "Unexpected bad characters at ${filter.badCharacters}")
+    }
+
+    @Test
     fun validateVariable() {
         val filter = validateLdapFilter("(enabled=true)")
 

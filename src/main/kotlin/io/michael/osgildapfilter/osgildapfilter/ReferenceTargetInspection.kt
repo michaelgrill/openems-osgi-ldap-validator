@@ -1,6 +1,5 @@
 package io.michael.osgildapfilter.osgildapfilter
 
-import ai.grazie.nlp.utils.checkedEndExclusive
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.openapi.util.TextRange
