@@ -1,7 +1,5 @@
 package io.michael.osgildapfilter.osgildapfilter
 
-import ai.grazie.nlp.utils.length
-
 data class SearchElement(
     val keyStartIndex: Int, // inclusive
     val keyEndIndex: Int, // exclusive
