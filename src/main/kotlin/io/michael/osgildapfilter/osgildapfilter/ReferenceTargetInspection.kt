@@ -18,6 +18,7 @@ class ReferenceTargetInspection : LocalInspectionTool() {
                 if (annotation.qualifiedName != REFERENCE_CLASS_NAME) return
 
                 val value = annotation.findAttributeValue("target") ?: return
+                val field = annotation.findDeclaredAttributeValue("target") ?: return
 
                 val constant = JavaPsiFacade.getInstance(annotation.project)
                     .constantEvaluationHelper.computeConstantExpression(
@@ -29,7 +30,7 @@ class ReferenceTargetInspection : LocalInspectionTool() {
 
                 ldapFilter.badCharacters.forEach { badCharacters ->
                     holder.registerProblem(
-                        value,
+                        field,
                         TextRange(badCharacters.range.first, badCharacters.range.checkedEndExclusive) + 1,
                         badCharacters.message
                     )
